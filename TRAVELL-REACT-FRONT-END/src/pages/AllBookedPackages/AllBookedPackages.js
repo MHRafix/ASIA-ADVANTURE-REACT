@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import useAuth from '../../CustomHooks/useAuth';
-import SingleOrder from './SingleOrder/SingleOrder';
+import SinglePackage from './SinglePackage/SinglePackage';
 
-const MyOrders = () => {
+const AllBookedPackages = () => {
 
     const history = useHistory();
-    const {user} = useAuth();
 
     const [bookedPackage, setBookedPackage] = useState([]);
     const [packages, setPackages] = useState([]);
 
     // Use effect for loading my order data from the server
     useEffect( () => {
-        fetch('https://frightening-cemetery-53831.herokuapp.com/myOrders')
+        fetch(`${process.env.BASE_URL}/myOrders`)
         .then(res => res.json())
         .then(data => setBookedPackage(data));
     }, []);
@@ -24,26 +22,25 @@ const MyOrders = () => {
         .then(res => res.json())
         .then(data => setPackages(data));
     }, []);
-    
-    // Take an empty array for storing the booked packages of logged in user
+
+    // Take an empty array for storing the booked packages 
     let orders = [];
 
-    // Bokked packages unique id
+    // Take an empty array for storing the booked id
     let userId = [];
 
-    let uniqueEmail = bookedPackage.filter(booked => booked.email === user.email);
-
-    for(let pckgs of uniqueEmail){
+    for(let pckgs of bookedPackage){
         userId.push(pckgs._id);
        let ids = pckgs.packageId;
        let pkg = packages.filter(pck => pck._id === ids);
        orders.push(pkg);
     }
+    
 
     // Serial number count
     let serialNo = 0;
-
-    // Handle back button if there is no bokked packages
+    
+    // Handle back button if there is no bokked pckages
     const handleBackBtn = () => {
           history.push('/');
     }
@@ -57,7 +54,7 @@ const MyOrders = () => {
                         <h2 className="title">My Booked Packages</h2>
                     </div>
                     <div className="row justify-content-center">
-                        {  orders.length ? orders.map(order => <SingleOrder key={serialNo++} serial={serialNo + 1} orderPck={order} userId={userId} />) : <>
+                        {  orders.length ? orders.map(order => <SinglePackage key={serialNo++} serial={serialNo + 1} orderPck={order} userId={userId} />) : <>
                         <h2>No order available</h2> <br />
                         <button className="regularBtn" onClick={handleBackBtn} style={{width: "200px"}}>Go Back</button>
                         </>
@@ -69,4 +66,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default AllBookedPackages;

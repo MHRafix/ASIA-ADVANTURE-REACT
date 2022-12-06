@@ -7,7 +7,7 @@ const Packages = () => {
 
     // Use useEffect for load data from the server
     useEffect(() => {
-        fetch('https://frightening-cemetery-53831.herokuapp.com/travelPackages')
+        fetch(`${process.env.BASE_URL}/travelPackages`)
         .then(res => res.json())
         .then(data => setPackages(data));
     }, []);

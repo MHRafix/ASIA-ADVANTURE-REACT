@@ -18,7 +18,7 @@ const SinglePackage = (props) => {
         const procced = window.confirm("Are you sure ?");
    
         if(procced){
-           const url = `https://frightening-cemetery-53831.herokuapp.com/myOrders/${id}`;
+           const url = `${process.env.BASE_URL}/myOrders/${id}`;
            fetch(url, {
                method: 'DELETE'
            })

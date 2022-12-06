@@ -8,7 +8,7 @@ const AddPackage = () => {
       const { register, handleSubmit, reset } = useForm();
 
       const onSubmit = data => {
-        axios.post('https://frightening-cemetery-53831.herokuapp.com/travelPackages', data)
+        axios.post(`${process.env.BASE_URL}/travelPackages`, data)
         .then(res => {
           if(res.data.insertedId){
               alert('Package Posted Successfully!');

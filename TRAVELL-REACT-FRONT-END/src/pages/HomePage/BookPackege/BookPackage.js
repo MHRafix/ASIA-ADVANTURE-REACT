@@ -15,7 +15,7 @@ const BookPackage = () => {
 
     // Use effect for loading data from the server
     useEffect( () => {
-        fetch('https://frightening-cemetery-53831.herokuapp.com/travelPackages')
+        fetch(`${process.env.BASE_URL}/travelPackages`)
         .then(res => res.json())
         .then(data => setPackages(data));
     }, []);
@@ -35,7 +35,7 @@ const BookPackage = () => {
     
     // Booking package data insert to the database
     const onSubmit = data => {
-          axios.post('https://frightening-cemetery-53831.herokuapp.com/BookedPackages', data)
+          axios.post(`${process.env.BASE_URL}/BookedPackages`, data)
           .then(res => {
             if(res.data.insertedId){
                 alert('Package successfully booked!');
